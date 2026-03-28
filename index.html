@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Najpovoljniji rent a car u Baru. Iznajmite vozilo bez depozita uz besplatnu dostavu na aerodrome Podgorica i Tivat. Sigurna i pouzdana vozila za vaš odmor u Crnoj Gori.">
+    <title>EOS Rent a Car Bar | Iznajmljivanje vozila Crna Gora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        
+        html { scroll-behavior: smooth; }
+        .card-hover { transition: all 0.3s ease; cursor: pointer; }
+        .card-hover:hover {
+            transform: scale(1.03);
+            border-color: #1e40af;
+            box-shadow: 0 20px 25px -5px rgba(30, 64, 175, 0.2);
+            z-index: 10;
+        }
+        .lang-dropdown:hover .lang-menu { display: block; }
+        .lang-menu { display: none; }
+        
+        .slider-container { overflow: hidden; position: relative; }
+        .slider-track { display: flex; transition: transform 0.5s ease-in-out; }
+        .slide { min-width: 100%; padding: 0 10px; }
+        @media (min-width: 768px) { .slide { min-width: 33.333%; } }
+
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; }
+        .faq-item.active .faq-content { max-height: 400px; }
+        .faq-item.active i { transform: rotate(180deg); }
+
+        .location-card:hover i { transform: translateY(-5px); color: #2563eb; }
+        .location-card i { transition: all 0.3s ease; }
+        
+        .car-img { object-fit: contain; padding: 10px; background: #fff; }
+
+        #carModal { display: none; }
+        .modal-active { overflow: hidden; }
+        .modal-track { display: flex; transition: transform 0.4s ease-in-out; height: 100%; }
+        .modal-slide { min-width: 100%; height: 100%; }
+        .modal-slide img { width: 100%; height: 100%; object-fit: cover; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-blue-100">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between h-20 items-center">
+            
+            <div class="flex items-center space-x-3 flex-shrink-0">
+                <img src="logo.JPG" alt="EOS Logo" class="h-14 md:h-20 w-auto object-contain block">
+                <div class="text-2xl md:text-3xl font-black tracking-tighter text-blue-800 uppercase leading-none flex items-center">
+                    EOS <span class="text-slate-400 font-light italic ml-2">Rent</span>
+                </div>
+            </div> <div class="flex items-center space-x-2 md:space-x-3 overflow-visible">
+                
+                <div class="hidden xl:flex items-center space-x-2 font-bold uppercase text-[10px] tracking-[0.12em]">
+                    <a href="javascript:window.scrollTo(0,0);" data-key="nav-home" 
+                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-md flex items-center group">
+                       <i class="fas fa-home mr-2 text-blue-300"></i> Početna
+                    </a>
+                    
+                    <a href="#ponuda" data-key="nav-offer" 
+                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-md flex items-center group">
+                       <i class="fas fa-car mr-2 text-blue-300"></i> Ponuda
+                    </a>
+                    
+                    <a href="#iskustva" data-key="nav-reviews" 
+                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-md flex items-center group">
+                       <i class="fas fa-star mr-2 text-blue-300"></i> Iskustva
+                    </a>
+                </div>
+    
+                <div class="relative lang-dropdown group py-4">
+                    <button class="flex items-center space-x-2 font-bold text-blue-800 border-2 border-blue-50 px-3 py-3 rounded-xl bg-slate-50 hover:bg-white transition shadow-sm">
+                        <span id="current-flag">🇲🇪</span>
+                        <span id="current-lang" class="tracking-widest text-[11px]">MNE</span>
+                        <i class="fas fa-chevron-down text-[10px] opacity-50"></i>
+                    </button>
+                    <div class="lang-menu absolute right-0 pt-2 w-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[60]">
+                        <div class="bg-white shadow-2xl border border-slate-100 rounded-xl overflow-hidden">
+                            <button onclick="changeLanguage('mne', '🇲🇪')" class="flex items-center w-full text-left px-4 py-3 hover:bg-blue-50 text-sm font-bold border-b border-slate-50">🇲🇪 MNE</button>
+                            <button onclick="changeLanguage('en', '🇺🇸')" class="flex items-center w-full text-left px-4 py-3 hover:bg-blue-50 text-sm font-bold border-b border-slate-50">🇺🇸 EN</button>
+                            <button onclick="changeLanguage('ru', '🇷🇺')" class="flex items-center w-full text-left px-4 py-3 hover:bg-blue-50 text-sm font-bold">🇷🇺 RU</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <a href="https://wa.me/38268688337" class="bg-gradient-to-r from-green-600 to-green-400 text-white px-4 py-3 rounded-xl font-bold hover:from-green-500 hover:to-green-300 transition-all shadow-lg flex items-center flex-shrink-0 text-[11px] tracking-widest uppercase">
+                    <i class="fab fa-whatsapp md:mr-2 text-xl"></i> 
+                    <span data-key="btn-contact" class="hidden sm:inline">Kontakt</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <section class="relative min-h-[700px] flex items-center bg-[#0a0f1d] overflow-hidden py-20">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-blue-600 rounded-full blur-[120px] opacity-20"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-blue-500 rounded-full blur-[150px] opacity-10"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 40px 40px;"></div>
+    
+        <div class="max-w-7xl mx-auto px-4 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="text-center lg:text-left order-2 lg:order-1 lg:col-span-5">
+                    <h1 data-key="hero-title" class="text-5xl md:text-[70px] font-black text-white mb-6 leading-[0.9] italic uppercase tracking-tighter">
+                        Vaša sigurnost je <br> 
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200">naš prioritet.</span>
+                    </h1>
+                    <p data-key="hero-subtitle" class="text-lg md:text-xl text-slate-400 mb-10 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
+                        Iznajmite vozilo u par klikova, preuzmite ga bez depozita  <br class="hidden md:block"> i uživajte u neograničenoj slobodi kretanja.
+                    </p>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                        <a href="#ponuda" data-key="btn-view" class="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-blue-500 transition-all duration-300 shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-1">
+                            Pogledaj Ponudu
+                        </a>
+                    </div>
+                </div>
+    
+                <div class="relative order-1 lg:order-2 lg:col-span-7 flex justify-center items-center">
+                    <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/5 bg-slate-900/50">
+                        <img src="hero-car.jpg" 
+                             alt="Rent a Car" 
+                             class="w-full h-auto object-cover block">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-r from-[#0a0f1d] via-transparent to-transparent hidden lg:block"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0f1d] via-transparent to-transparent lg:hidden block"></div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+    <div id="carModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-2xl rounded-3xl overflow-hidden relative shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/90 w-10 h-10 rounded-full flex items-center justify-center text-blue-900 shadow-lg">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <div class="relative h-64 md:h-80 overflow-hidden bg-slate-100">
+                <div id="modalTrack" class="modal-track"></div>
+                <button onclick="moveModalSlider(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white p-2 rounded-full text-blue-900 transition"><i class="fas fa-chevron-left"></i></button>
+                <button onclick="moveModalSlider(1)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white p-2 rounded-full text-blue-900 transition"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="p-8">
+                <h2 id="modalTitle" class="text-3xl font-black text-blue-900 italic uppercase mb-4"></h2>
+                <div id="modalSpecs" class="space-y-1 text-lg font-bold text-slate-600 border-l-4 border-blue-600 pl-4 mb-8"></div>
+                <a id="modalWaBtn" href="#" class="block w-full bg-blue-600 text-white text-center py-4 rounded-xl font-black uppercase hover:bg-blue-700 transition shadow-lg">
+                    <span data-key="btn-rez">Rezerviši</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <section class="py-12 bg-white border-b border-blue-50">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-black text-blue-800">120+</div>
+                <p data-key="stat-1" class="text-slate-500 font-medium uppercase text-sm tracking-widest mt-2">Zadovoljnih saradnji</p>
+            </div>
+            <div class="border-x-0 md:border-x border-slate-100">
+                <div data-key="stat-2-main" class="text-4xl font-black text-blue-800 italic uppercase">Cijela Crna Gora</div>
+                <p data-key="stat-2" class="text-slate-500 font-medium uppercase text-sm tracking-widest mt-2">Dostupni u svim gradovima</p>
+            </div>
+            <div>
+                <div class="text-4xl font-black text-blue-800 uppercase italic">24/7</div>
+                <p data-key="stat-3" class="text-slate-500 font-medium uppercase text-sm tracking-widest mt-2">Podrška i asistencija</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 text-white rounded-[40px] mx-4 my-10 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-8 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10 md:gap-12">
+                                
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-900/50 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-headset text-2xl text-white"></i>
+                    </div>
+                    <h4 data-key="ben-1-h" class="font-bold uppercase tracking-widest text-sm mb-2">Pomoć na putu</h4>
+                    <p data-key="ben-1-p" class="text-slate-400 text-sm">Dostupni smo 24/7.</p>
+                </div>
+    
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-900/50 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-baby text-2xl text-white"></i>
+                    </div>
+                    <h4 data-key="ben-2-h" class="font-bold uppercase tracking-widest text-sm mb-2">Dječije sjedište</h4>
+                    <p data-key="ben-2-p" class="text-slate-400 text-sm">Besplatno na zahtjev.</p>
+                </div>
+    
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-900/50 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-file-contract text-2xl text-white"></i>
+                    </div>
+                    <h4 data-key="ben-3-h" class="font-bold uppercase tracking-widest text-sm mb-2">Zeleni karton</h4>
+                    <p data-key="ben-3-p" class="text-slate-400 text-sm">Spremno za granicu.</p>
+                </div>
+    
+                <div class="text-center group">
+                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-900/50 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-coins text-2xl text-white"></i>
+                    </div>
+                    <h4 data-key="ben-4-h" class="font-bold uppercase tracking-widest text-sm mb-2">Bez depozita</h4>
+                    <p data-key="ben-4-p" class="text-slate-400 text-sm">Bez blokiranja sredstava.</p>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+
+    <section id="ponuda" class="py-20 max-w-7xl mx-auto px-4">
+        <h2 data-key="offer-title" class="text-4xl font-black italic uppercase text-blue-900 mb-16 tracking-tighter text-center">Naša Ponuda</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div onclick="openModal(0)" class="bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden flex flex-col card-hover">
+                <div class="h-52 bg-white"><img src="https://images.clickdealer.co.uk/vehicles/7274/7274301/large2/175021121.jpg" class="w-full h-full car-img" alt="Rent a car Bar - Audi A3 iznajmljivanje Crna Gora"></div>
+                <div class="p-6 flex-grow">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900 italic">Audi A3 2.0 TDI</h3>
+                    <div class="space-y-1 font-bold text-blue-600"><p>1-3 dana: 40€</p><p>4-15 dana: 35€</p><p class="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm">15+ dana: 30€</p></div>
+                </div>
+                <div class="w-full bg-blue-900 text-white py-4 font-bold uppercase text-center" data-key="btn-view">Pogledaj</div>
+            </div>
+
+            <div onclick="openModal(1)" class="bg-white rounded-2xl shadow-md border-2 border-blue-600 overflow-hidden flex flex-col card-hover transform lg:scale-105">
+                <div class="h-52 bg-blue-50"><img src="https://www.heritage-print.com/p/731/2011-volkswagen-eos-20-tdi-40607111.jpg.webp" class="w-full h-full car-img" alt="Rent a car Bar - VW Eos iznajmljivanje Crna Gora"></div>
+                <div class="p-6 flex-grow">
+                    <div data-key="premium" class="text-xs font-bold text-blue-600 uppercase mb-1">Preporuka firme</div>
+                    <h3 class="text-2xl font-black mb-4 text-blue-900 italic uppercase">VW Eos 2.0 TDI</h3>
+                    <div class="space-y-1 font-bold text-blue-700"><p>1-3 dana: 50€</p><p>4-15 dana: 40€</p><p class="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm">15+ dana: 30€</p></div>
+                </div>
+                <div class="w-full bg-blue-600 text-white py-4 font-black uppercase text-center" data-key="btn-view">Pogledaj</div>
+            </div>
+
+            <div onclick="openModal(2)" class="bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden flex flex-col card-hover">
+                <div class="h-52 bg-white"><img src="https://s1.cdn.autoevolution.com/images/gallery/VOLKSWAGEN-Touran-1517_17.jpeg" class="w-full h-full car-img" alt="Rent a car Bar - VW Touran iznajmljivanje Crna Gora"></div>
+                <div class="p-6 flex-grow">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900 italic">VW Touran (7 sjedišta)</h3>
+                    <div class="space-y-1 font-bold text-blue-600"><p>1-3 dana: 45€</p><p>4-15 dana: 40€</p><p class="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm">15+ dana: 30€</p></div>
+                </div>
+                <div class="w-full bg-blue-900 text-white py-4 font-bold uppercase text-center" data-key="btn-view">Pogledaj</div>
+            </div>
+
+            <div onclick="openModal(3)" class="bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden flex flex-col card-hover">
+                <div class="h-52 bg-white"><img src="https://imgd.aeplcdn.com/664x374/cw/ec/21023/Skoda-Octavia-Right-Front-Three-Quarter-77808.jpg?v=201711021421&q=80" class="w-full h-full car-img" alt="Rent a car Bar - Škoda Octavia iznajmljivanje Crna Gora"></div>
+                <div class="p-6 flex-grow">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900 italic">Škoda Octavia</h3>
+                    <div class="space-y-1 font-bold text-blue-600"><p>1-3 dana: 40€</p><p>4-15 dana: 35€</p><p class="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm">15+ dana: 30€</p></div>
+                </div>
+                <div class="w-full bg-blue-900 text-white py-4 font-bold uppercase text-center" data-key="btn-view">Pogledaj</div>
+            </div>
+
+            <div onclick="openModal(4)" class="bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden flex flex-col card-hover">
+                <div class="h-52 bg-white"><img src="https://car-images.bauersecure.com/wp-images/7823/renaultclio001.jpg" class="w-full h-full car-img" alt="Rent a car Bar - Renault Clio iznajmljivanje Crna Gora"></div>
+                <div class="p-6 flex-grow">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900 italic">Renault Clio</h3>
+                    <div class="space-y-1 font-bold text-blue-600"><p>1-3 dana: 35€</p><p>4-15 dana: 30€</p><p class="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm">15+ dana: 25€</p></div>
+                </div>
+                <div class="w-full bg-blue-900 text-white py-4 font-bold uppercase text-center" data-key="btn-view">Pogledaj</div>
+            </div>
+
+            <div onclick="openModal(5)" class="bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden flex flex-col card-hover">
+                <div class="h-52 bg-white"><img src="https://www.asphalte.ch/news/wp-content/gallery/vw-golf-vii-gti/vw-golf-vii-gti-03.jpg" class="w-full h-full car-img" alt="Rent a car Bar - VW Golf 7 iznajmljivanje Crna Gora"></div>
+                <div class="p-6 flex-grow">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-900 italic">VW Golf 7</h3>
+                    <div class="space-y-1 font-bold text-blue-600"><p>1-3 dana: 40€</p><p>4-15 dana: 35€</p><p class="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 bg-clip-text text-transparent drop-shadow-sm">15+ dana: 30€</p></div>
+                </div>
+                <div class="w-full bg-blue-900 text-white py-4 font-bold uppercase text-center" data-key="btn-view">Pogledaj</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 md:py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 data-key="steps-title" class="text-2xl md:text-4xl font-black italic uppercase mb-10 md:mb-24 tracking-tighter text-slate-900">
+                Kako rezervisati <span class="text-blue-600">u 3 koraka?</span>
+            </h2>
+            
+            <div class="relative">
+                <div class="hidden md:block absolute top-[70px] left-0 w-full h-2 bg-slate-100 z-0 rounded-full">
+                    <div class="absolute top-0 left-0 w-1/2 h-full bg-blue-600 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.4)]"></div>
+                </div>
+    
+                <div class="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-16 relative z-10">
+                    
+                    <div class="flex flex-col items-center group">
+                        <span class="hidden md:block text-4xl font-black italic text-blue-600 mb-2 transition-transform group-hover:-translate-y-2 duration-300">1</span>
+                        <div class="hidden md:block w-7 h-7 rounded-full bg-blue-600 border-4 border-white shadow-md mb-8 z-20"></div>
+                        
+                        <div class="w-14 h-14 md:w-24 md:h-24 bg-white border border-slate-100 md:border-2 rounded-2xl md:rounded-3xl flex items-center justify-center mb-3 md:mb-6 group-hover:border-blue-600 group-hover:shadow-2xl group-hover:shadow-blue-50 transition-all duration-500">
+                            <i class="fas fa-car text-xl md:text-4xl text-blue-600"></i>
+                        </div>
+                        <h4 data-key="step1-h" class="font-bold uppercase italic mb-1 md:mb-2 text-[10px] md:text-xl text-slate-900 leading-tight">Odaberite auto</h4>
+                        <p data-key="step1-p" class="hidden md:block text-slate-500 text-sm max-w-[250px] leading-relaxed">Pregledajte našu modernu ponudu i izaberite vozilo po vašoj mjeri.</p>
+                    </div>
+    
+                    <div class="flex flex-col items-center group">
+                        <span class="hidden md:block text-4xl font-black italic text-blue-600 mb-2 transition-transform group-hover:-translate-y-2 duration-300">2</span>
+                        <div class="hidden md:block w-7 h-7 rounded-full bg-blue-600 border-4 border-white shadow-md mb-8 z-20"></div>
+                        
+                        <div class="w-14 h-14 md:w-24 md:h-24 bg-white border border-slate-100 md:border-2 rounded-2xl md:rounded-3xl flex items-center justify-center mb-3 md:mb-6 group-hover:border-blue-600 group-hover:shadow-2xl group-hover:shadow-blue-50 transition-all duration-500">
+                            <i class="fab fa-whatsapp text-xl md:text-4xl text-blue-600"></i>
+                        </div>
+                        <h4 data-key="step2-h" class="font-bold uppercase italic mb-1 md:mb-2 text-[10px] md:text-xl text-slate-900 leading-tight">Potvrdite izbor</h4>
+                        <p data-key="step2-p" class="hidden md:block text-slate-500 text-sm max-w-[250px] leading-relaxed">Pošaljite nam poruku. Odgovaramo odmah i dogovaramo detalje.</p>
+                    </div>
+    
+                    <div class="flex flex-col items-center group">
+                        <span class="hidden md:block text-4xl font-black italic text-slate-200 mb-2 transition-transform group-hover:-translate-y-2 group-hover:text-blue-600 duration-300">3</span>
+                        <div class="hidden md:block w-7 h-7 rounded-full bg-slate-200 border-4 border-white shadow-md mb-8 z-20 group-hover:bg-blue-600 transition-colors duration-500"></div>
+                        
+                        <div class="w-14 h-14 md:w-24 md:h-24 bg-white border border-slate-100 md:border-2 rounded-2xl md:rounded-3xl flex items-center justify-center mb-3 md:mb-6 group-hover:border-blue-600 group-hover:shadow-2xl group-hover:shadow-blue-50 transition-all duration-500">
+                            <i class="fas fa-key text-xl md:text-4xl text-blue-600"></i>
+                        </div>
+                        <h4 data-key="step3-h" class="font-bold uppercase italic mb-1 md:mb-2 text-[10px] md:text-xl text-slate-900 leading-tight">Preuzmite auto</h4>
+                        <p data-key="step3-p" class="hidden md:block text-slate-500 text-sm max-w-[250px] leading-relaxed">Čekamo vas na dogovorenoj lokaciji. Spremni za put!</p>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 shadow-2xl">
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl"></div>
+    
+                <div class="relative px-8 py-12 md:px-16 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl md:text-4xl font-black text-white italic uppercase tracking-tighter mb-4">
+                            Spremni za putovanje?
+                        </h2>
+                        <p class="text-blue-100 text-lg max-w-xl font-light">
+                            Rezervišite svoje idealno vozilo u manje od 2 minuta. Bez skrivenih troškova i uz potpunu podršku 24/7.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://wa.me/38268688337" class="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-900 font-black uppercase italic rounded-xl hover:bg-blue-50 transition-all transform hover:scale-105 shadow-lg">
+                            <i class="fab fa-whatsapp mr-2 text-xl"></i> Rezerviši odmah
+                        </a>
+                        <a href="#o-nama" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 text-white font-bold uppercase italic rounded-xl hover:bg-white/10 transition-all">
+                            Saznaj više
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="iskustva" class="py-20 bg-slate-50 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 data-key="reviews-title" class="text-3xl font-black mb-4 uppercase italic text-blue-900 tracking-tighter">Šta kažu naši klijenti</h2>
+                <div class="flex flex-col items-center justify-center space-y-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xl font-bold">Odlična ocijena na Google-u</span>
+                    </div>
+                    <div class="flex items-center text-yellow-400 text-xl">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <span class="ml-2 text-slate-700 font-bold">5.0 / 5</span>
+                    </div>
+                    <a href="https://www.google.com/search?q=rent+a+car+eos+bar+recenzije&rlz=1C1GCEA_enME1150ME1150&oq=rent+a+ca&gs_lcrp=EgZjaHJvbWUqCAgAEEUYJxg7MggIABBFGCcYOzIGCAEQRRhAMgYIAhBFGDkyBggDEEUYOzIQCAQQRRgTGCcYOxiABBiKBTIKCAUQABiSAxiABDINCAYQABiSAxiABBiKBTIMCAcQABhDGIAEGIoF0gELNzA3NTM0ajBqMTWoAgiwAgHxBQN5Ww1H6k_Y&sourceid=chrome&ie=UTF-8#" target="_blank" class="text-blue-600 hover:underline text-sm font-semibold">
+                        Pogledaj svih 50+ recenzija na Google Maps
+                    </a>
+                </div>
+            </div>
+    
+            <div class="slider-container relative">
+                <div class="slider-track" id="sliderTrack">
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 font-bold mr-3">M</div>
+                                <div><h4 class="font-bold text-sm">Marta P.</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-1"class="text-slate-600 text-sm italic">"Jučer smo imali vrlo ugodno iskustvo s ovom uslugom iznajmljivanja automobila. Komunikacija je bila brza i laka preko Vibera i sve se riješilo u trenu. Amar je uvijek bio dostupan na telefonu i od velike pomoći! ☺️
+                                Ono što nam se doista istaknulo bila je fleksibilnost – mogli smo iznajmiti automobil na samo jedan dan, što je sjajno jer mnoga mjesta zahtijevaju najmanje 2 dana. Cijela usluga bila je ljubazna i pouzdana od početka do kraja. Topla preporuka! 👍🏻"</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-800 font-bold mr-3">M</div>
+                                <div><h4 class="font-bold text-sm">Mael L'Hostis</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-2" class="text-slate-600 text-sm italic">"Hvala vam puno na ovom autu. Bila je to jednostavna, savršena komunikacija, a automobil je bio stvarno lijep. Svakako preporučujemo ovo mjesto."</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-800 font-bold mr-3">F</div>
+                                <div><h4 class="font-bold text-sm">Faris Husovic</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-3" class="text-slate-600 text-sm italic">"Iznajmljujem cesto auto kod ovoga momka, svaka preporuka za njih. Amar je bas posten momak. Svako auto im je ispravno, udobno, cisto. Ni jedan put nikakav problem ni sa autom ni sa Amarom… sve pohvale i preporuke!"</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-800 font-bold mr-3">A</div>
+                                <div><h4 class="font-bold text-sm">Anastasia Simonova</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-4" class="text-slate-600 text-sm italic">"Izuzetno ljubazna usluga prema klijentima. Nazvao i sljedeći dan dobio auto. Nalazi se u blizini autobusnog kolodvora. Preporučiti!"</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-800 font-bold mr-3">V</div>
+                                <div><h4 class="font-bold text-sm">Vuk Runjajić</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-5" class="text-slate-600 text-sm italic">"Auto u savršenom stanju, preuzimanje i vraćanje bez ikakvih problema, osoblje izuzetno ljubazno. Sve preporuke."</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold mr-3">P</div>
+                                <div><h4 class="font-bold text-sm">Ph Dht</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-6" class="text-slate-600 text-sm italic">"Odličan auto, izvrsna usluga, vlasnici su bili ljubazni, toplo preporučujem."</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold mr-3">A</div>
+                                <div><h4 class="font-bold text-sm">Artur Art</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-7" class="text-slate-600 text-sm italic">"dobra usluga. Osigurali su auto na vrijeme. Kada sam vraćao auto, a ostalo mi je malo vremena do polaska vlaka, djelatnik servisa se ponudio da me odveze do kolodvora. Sljedeći put ću sigurno uzeti auto iz ovog servisa."</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold mr-3">D</div>
+                                <div><h4 class="font-bold text-sm">danilo suster</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-8" class="text-slate-600 text-sm italic">"Unajmio sam auto na 25 dana, bez sumnje svaki auto je odličan, preporučujem ga. Amar je stvarno dobar dečko, želi pomoći svima i dostupan je 24/7. Od mene 5 zvjezdica."</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold mr-3">A</div>
+                                <div><h4 class="font-bold text-sm">Abbey Layton</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-9" class="text-slate-600 text-sm italic">"Sjajan, obiteljski posao i sve je bilo super! Odličan auto, odlična usluga! Toplo bih preporučio"</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold mr-3">H</div>
+                                <div><h4 class="font-bold text-sm">H. Nuredini</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-10" class="text-slate-600 text-sm italic">"zahvaljujući EOS Rent a Caru, vrlo kompetentan i uslužan"</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold mr-3">A</div>
+                                <div><h4 class="font-bold text-sm">ann kohler</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-11" class="text-slate-600 text-sm italic">"Dobra cijena, vrlo prijateljski. Preporuka!"</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 h-full flex flex-col">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-800 font-bold mr-3">V</div>
+                                <div><h4 class="font-bold text-sm">Vedza 1</h4><div class="text-yellow-400 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div></div>
+                            </div>
+                            <p data-key="rev-12" class="text-slate-600 text-sm italic">"10/10 sve pohvale na profesionalnosti i udobnosti vozila"</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="flex justify-center space-x-4 mt-8">
+                    <button onclick="prevSlide()" class="bg-white border border-blue-200 text-blue-900 w-10 h-10 rounded-full hover:bg-blue-900 hover:text-white transition shadow-sm"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="nextSlide()" class="bg-white border border-blue-200 text-blue-900 w-10 h-10 rounded-full hover:bg-blue-900 hover:text-white transition shadow-sm"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 data-key="faq-title" class="text-4xl font-black italic uppercase text-blue-900 mb-12 tracking-tighter text-center">Česta Pitanja</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <div class="faq-item border border-slate-200 rounded-xl overflow-hidden bg-slate-50 shadow-sm">
+                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-5 text-left font-bold text-blue-900 hover:bg-blue-50 transition">
+                        <span data-key="q1">Šta mi je potrebno od dokumenata?</span>
+                        <i class="fas fa-chevron-down text-sm transition-transform"></i>
+                    </button>
+                    <div class="faq-content bg-white">
+                        <p data-key="a1" class="p-5 text-slate-600 border-t border-slate-100 leading-relaxed">Sve što je potrebno da imate jeste vozačka dozvola i lična karta ili pasoš.</p>
+                    </div>
+                </div>
+                <div class="faq-item border border-slate-200 rounded-xl overflow-hidden bg-slate-50 shadow-sm">
+                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-5 text-left font-bold text-blue-900 hover:bg-blue-50 transition">
+                        <span data-key="q2">Mogu li preuzeti auto na aerodromu?</span>
+                        <i class="fas fa-chevron-down text-sm transition-transform"></i>
+                    </button>
+                    <div class="faq-content bg-white">
+                        <p data-key="a2" class="p-5 text-slate-600 border-t border-slate-100 leading-relaxed">Da, vršimo dostavu na aerodrome Podgorica i Tivat, kao i širom Crne Gore uz dogovor.</p>
+                    </div>
+                </div>
+                <div class="faq-item border border-slate-200 rounded-xl overflow-hidden bg-slate-50 shadow-sm">
+                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-5 text-left font-bold text-blue-900 hover:bg-blue-50 transition">
+                        <span data-key="q3">Šta se dešava u slučaju problema na putu?</span>
+                        <i class="fas fa-chevron-down text-sm transition-transform"></i>
+                    </button>
+                    <div class="faq-content bg-white">
+                        <p data-key="a3" class="p-5 text-slate-600 border-t border-slate-100 leading-relaxed">Naša vozila su redovno servisirana, ali u rijetkom slučaju bilo kakvog tehničkog problema, nudimo pomoć na putu 24/7. Ukoliko problem nije moguće rijesiti odmah, objezbjeđujemo zamjensko vozilo u najkraćem roku.</p>
+                    </div>
+                </div>
+                <div class="faq-item border border-slate-200 rounded-xl overflow-hidden bg-slate-50 shadow-sm">
+                    <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-5 text-left font-bold text-blue-900 hover:bg-blue-50 transition">
+                        <span data-key="q4">Da li je potreban depozit?</span>
+                        <i class="fas fa-chevron-down text-sm transition-transform"></i>
+                    </button>
+                    <div class="faq-content bg-white">
+                        <p data-key="a4" class="p-5 text-slate-600 border-t border-slate-100 leading-relaxed">Nudimo mogućnost najma bez depozita, zavisno od modela i trajanja najma.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="mt-12 text-center bg-blue-50 p-8 rounded-[30px] border border-blue-100 shadow-sm">
+        <h3 class="text-2xl font-bold text-blue-900 mb-2">Imate još neko pitanje?</h3>
+        <p class="text-slate-600 mb-6">Naš tim je dostupan 24/7 za sve dodatne informacije i brze rezervacije.</p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="https://wa.me/38268688337?text=Zdravo!%20Imam%20pitanje%20u%20vezi%20rentiranja%20vozila..." 
+               class="inline-flex items-center justify-center bg-[#25D366] text-white font-bold py-4 px-8 rounded-xl hover:bg-[#20ba5a] transition-all transform hover:scale-105 shadow-lg">
+                <i class="fab fa-whatsapp text-2xl mr-2"></i>
+                PITAJ NA WHATSAPP
+            </a>
+            
+            <a href="tel:+38268688337" 
+               class="inline-flex items-center justify-center bg-blue-900 text-white font-bold py-4 px-8 rounded-xl hover:bg-blue-800 transition-all transform hover:scale-105 shadow-lg">
+                <i class="fas fa-phone-alt mr-2"></i>
+                POZOVITE NAS
+            </a>
+        </div>
+    </div>
+
+    <section id="o-nama" class="py-24 bg-blue-950 text-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-blue-900/20 skew-x-12 transform translate-x-20"></div>
+    
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-16 relative z-10">
+            
+            <div class="md:w-5/12 flex justify-center">
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-blue-500 rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition"></div>
+                    
+                    <div class="relative bg-transparent p-10 rounded-full border-2 border-blue-800/50 flex flex-col items-center justify-center w-72 h-72 backdrop-blur-sm">
+                        <span class="text-6xl font-black tracking-tighter text-white">EOS</span>
+                        <span class="text-blue-400 font-bold uppercase tracking-[0.3em] text-xs mt-2 italic">Rent a Car</span>
+                        <div class="w-12 h-1 bg-blue-500 mt-4"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="md:w-7/12 space-y-8">
+                <div class="inline-block border-l-4 border-blue-500 pl-6">
+                    <h2 data-key="about-company-title" class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter leading-none">
+                        O našoj <br><span class="text-blue-500">kompaniji</span>
+                    </h2>
+                </div>
+                
+                <div class="space-y-6">
+                    <p data-key="about-company-p1" class="text-xl text-blue-100/90 leading-relaxed font-light">
+                        EOS Rent a Car je porodična firma sa sjedištem u Baru, vođena principima <span class="text-white font-bold italic text-blue-400">poštenja, kvaliteta i apsolutne posvećenosti</span> klijentu.
+                    </p>
+                    <p data-key="about-company-p2" class="text-lg text-slate-400 leading-relaxed">
+                        Od ekonomičnih gradskih modela do prostranih porodičnih vozila sa 7 sjedišta, naša ponuda je pažljivo birana i redovno servisirana kako bismo vam osigurali maksimalnu sigurnost na putevima Crne Gore.
+                    </p>
+                </div>
+    
+                <div class="grid grid-cols-2 gap-6 pt-6">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-check-circle text-blue-500 text-xl"></i>
+                        <span class="text-sm font-bold uppercase tracking-widest text-blue-100">Sigurnost na prvom mjestu</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-check-circle text-blue-500 text-xl"></i>
+                        <span class="text-sm font-bold uppercase tracking-widest text-blue-100">Transparentan ugovor</span>
+                    </div>
+                </div>
+    
+                <div class="pt-4">
+                    <span data-key="about-team" class="text-blue-500 font-black italic uppercase tracking-widest text-sm border-b-2 border-blue-500/30 pb-1">
+                        Tim EOS Rent a Car
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="lokacija" class="py-20 max-w-7xl mx-auto px-4">
+        <div class="bg-white rounded-[40px] shadow-xl overflow-hidden border border-slate-100">
+            <div class="flex flex-col md:flex-row">
+                
+                <div class="p-10 md:p-16 md:w-1/3 bg-blue-900 text-white flex flex-col justify-center">
+                    <h2 class="text-3xl font-black italic uppercase mb-8 tracking-tighter">Gdje se nalazimo?</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <i class="fas fa-car text-xl text-amber-500 mt-1"></i>
+                            <div>
+                                <p class="font-bold uppercase text-xs text-blue-300 mb-1 tracking-widest">Firma</p>
+                                <p class="text-lg font-bold">Rent a Car EOS</p>
+                                <p class="text-slate-300">Beogradska 17, Bar 85000</p>
+                            </div>
+                        </div>
+    
+                        <div class="flex items-start space-x-4">
+                            <i class="fas fa-phone-alt text-xl text-amber-500 mt-1"></i>
+                            <div>
+                                <p class="font-bold uppercase text-xs text-blue-300 mb-1 tracking-widest">Kontakt / Viber / WA</p>
+                                <a href="tel:+38268688337" class="text-lg text-white hover:text-amber-500 transition-colors">+382 68 688 337</a>
+                            </div>
+                        </div>
+    
+                        <div class="flex items-start space-x-4">
+                            <i class="fas fa-clock text-xl text-amber-500 mt-1"></i>
+                            <div>
+                                <p class="font-bold uppercase text-xs text-blue-300 mb-1 tracking-widest">Radno vrijeme</p>
+                                <p class="text-lg">Dostupni smo 24/7</p>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Rent+a+Car+EOS+Bar" 
+                    target="_blank" 
+                    class="mt-10 inline-block bg-white text-blue-900 font-bold py-4 px-8 rounded-xl text-center uppercase hover:bg-amber-500 hover:text-white transition-all duration-300 shadow-lg text-decoration-none">
+                    Preuzmi uputstva
+                    </a>
+                </div>
+    
+                <div class="md:w-2/3 h-[450px] md:h-auto min-h-[450px] relative">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2455.1347642327473!2d19.09625236014318!3d42.08988548805773!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x134e730069f510c1%3A0x2ffcd1a13e5ac28b!2sRent%20a%20Car%20EOS%20Bar!5e1!3m2!1shr!2s!4v1767917571903!5m2!1shr!2s" 
+                        class="absolute inset-0 w-full h-full border-0" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+    
+    <section class="py-20 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 data-key="loc-title" class="text-3xl font-black uppercase italic text-blue-900 mb-12 tracking-tighter">Lokacije preuzimanja vozila</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="location-card p-6 border border-slate-100 rounded-2xl hover:shadow-lg transition">
+                    <i class="fas fa-plane-arrival text-4xl text-blue-500 mb-4"></i>
+                    <h5 data-key="loc-tgd" class="font-bold text-blue-900 uppercase text-sm tracking-tighter">Aerodrom TGD</h5>
+                </div>
+                <div class="location-card p-6 border border-slate-100 rounded-2xl hover:shadow-lg transition">
+                    <i class="fas fa-plane text-4xl text-blue-500 mb-4"></i>
+                    <h5 data-key="loc-tiv" class="font-bold text-blue-900 uppercase text-sm tracking-tighter">Aerodrom TIV</h5>
+                </div>
+                <div class="location-card p-6 border border-slate-100 rounded-2xl hover:shadow-lg transition">
+                    <i class="fas fa-ship text-4xl text-blue-500 mb-4"></i>
+                    <h5 data-key="loc-bar" class="font-bold text-blue-900 uppercase text-sm tracking-tighter">Luka Bar</h5>
+                </div>
+                <div class="location-card p-6 border border-slate-100 rounded-2xl hover:shadow-lg transition">
+                    <i class="fas fa-city text-4xl text-blue-500 mb-4"></i>
+                    <h5 data-key="loc-all" class="font-bold text-blue-900 uppercase text-sm tracking-tighter">Naša adresa</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="kontakt" class="bg-blue-950 text-white pt-20 pb-10 border-t-4 border-blue-600 text-center">
+        <h2 data-key="foot-title" class="text-4xl font-black mb-10 uppercase italic">Dostupni u svakom momentu</h2>
+        
+        <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16 text-xl font-semibold mb-12">
+            <a href="tel:+38268688337" class="hover:text-blue-400 transition">
+                <i class="fas fa-phone mr-2 text-blue-400"></i> +382 68 688 337
+            </a>
+            <a href="https://www.instagram.com/rentacar.eos_/" target="_blank" class="hover:text-pink-500 transition">
+                <i class="fab fa-instagram mr-2 text-pink-500"></i> rentacar.eos_
+            </a>
+            <span>
+                <i class="fas fa-map-marker-alt mr-2 text-blue-400"></i> Bar, Montenegro
+            </span>
+        </div>
+
+        <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em] mb-12">© 2024 EOS RENT A CAR | SVA PRAVA ZADRŽANA</p>
+
+        <div class="border-t border-white/5 pt-8 mt-8">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+                <div class="flex items-center space-x-1">
+                    <span>Developed by:</span>
+                    <span class="font-bold text-white uppercase tracking-tighter">Daris Velović</span>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <a href="tel:+38267118703" class="hover:text-white transition flex items-center">
+                        <i class="fas fa-code mr-2"></i> +382 67 118 703
+                    </a>
+                    <a href="https://www.instagram.com/dvelovic_/" target="_blank" class="hover:text-white transition flex items-center">
+                        <i class="fab fa-instagram mr-2"></i> @dvelovic_
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // PREVODI
+        const translations = {
+    mne: {
+        "hero-title": 'Vaša sigurnost je naš <span class="bg-gradient-to-b from-blue-300 via-blue-500 to-blue-800 bg-clip-text text-transparent font-black italic uppercase">prioritet.</span>',
+        "nav-home": '<i class="fas fa-home mr-2 text-blue-300"></i> Početna',
+        "nav-offer": '<i class="fas fa-car mr-2 text-blue-300"></i> Ponuda',
+        "nav-reviews": '<i class="fas fa-star mr-2 text-blue-300"></i> Iskustva',
+        "btn-contact": "Pišite nam", 
+        "hero-subtitle": "Preuzmite i ostavite vozilo bilo gdje u Crnoj Gori.",
+        "btn-view": "Pogledaj Ponudu", "stat-1": "Zadovoljnih saradnji",
+        "stat-2-main": "Cijela CG", "stat-2": "Dostupni u svim gradovima",
+        "stat-3": "Podrška i asistencija", "reviews-title": "Šta kažu naši klijenti",
+        "offer-title": "Naša Ponuda", "btn-rez": "Rezerviši", "premium": "Preporuka firme",
+        "foot-title": "Dostupni širom Crne Gore", "faq-title": "Česta Pitanja",
+        "ben-1-h": "Pomoć na putu", "ben-1-p": "Dostupni smo 24/7.",
+        "ben-2-h": "Dječije sjedište", "ben-2-p": "Besplatno na zahtjev.",
+        "ben-3-h": "Zeleni karton", "ben-3-p": "Spremno za granicu.",
+        "ben-4-h": "Bez depozita", "ben-4-p": "Bez blokiranja sredstava.",
+        "q1": "Šta mi je potrebno od dokumenata?", "a1": "Vozačka dozvola i pasoš/lična karta.",
+        "q2": "Mogu li preuzeti auto na aerodromu?", "a2": "Da, Podgorica, Tivat i ostali gradovi.",
+        "q3": "Da li je kasko uključen?", "a3": "Da, sva vozila su kasko osigurana.",
+        "q4": "Da li je potreban depozit?", "a4": "Mogućnost najma bez depozita.",
+        "about-company-title": "O našoj kompaniji", "loc-title": "Lokacije preuzimanja vozila",
+        "about-company-p1": "EOS Rent a Car je porodična firma sa sjedištem u Baru, vođena principima poštenja, kvaliteta i apsolutne posvećenosti klijentu.",
+        "about-company-p2": "Od malih gradskih automobila do prostranih porodičnih vozila sa 7 sjedišta, naša flota je pažljivo birana i redovno servisirana.",
+        "about-team": "Tim EOS Rent a Car",
+        "rev-1": "Jučer smo imali vrlo ugodno iskustvo s ovom uslugom iznajmljivanja automobila. Komunikacija je bila brza i laka preko Vibera i sve se riješilo u trenu. Amar je uvijek bio dostupan na telefonu i od velike pomoći! ☺️ Ono što nam se doista istaknulo bila je fleksibilnost – mogli smo iznajmiti automobil na samo jedan dan, što je sjajno jer mnoga mjesta zahtijevaju najmanje 2 dana. Cijela usluga bila je ljubazna i pouzdana od početka do kraja. Topla preporuka! 👍🏻",
+        "rev-2": "Hvala vam puno na ovom autu. Bila je to jednostavna, savršena komunikacija, a automobil je bio stvarno lijep. Svakako preporučujemo ovo mjesto.",
+        "rev-3": "Iznajmljujem cesto auto kod ovoga momka, svaka preporuka za njih. Amar je bas posten momak. Svako auto im je ispravno, udobno, cisto. Ni jedan put nikakav problem ni sa autom ni sa Amarom… sve pohvale i preporuke!",
+        "rev-4": "Izuzetno ljubazna usluga prema klijentima. Nazvao i sljedeći dan dobio auto. Nalazi se u blizini autobusnog kolodvora. Preporučiti!",
+        "rev-5": "Auto u savršenom stanju, preuzimanje i vraćanje bez ikakvih problema, osoblje izuzetno ljubazno. Sve preporuke.",
+        "rev-6": "Odličan auto, izvrsna usluga, vlasnici su bili ljubazni, toplo preporučujem.",
+        "rev-7": "dobra usluga. Osigurali su auto na vrijeme. Kada sam vraćao auto, a ostalo mi je malo vremena do polaska vlaka, djelatnik servisa se ponudio da me odveze do kolodvora. Sljedeći put ću sigurno uzeti auto iz ovog servisa.",
+        "rev-8": "Unajmio sam auto na 25 dana, bez sumnje svaki auto je odličan, preporučujem ga. Amar je stvarno dobar dečko, želi pomoći svima i dostupan je 24/7. Od mene 5 zvjezdica.",
+        "rev-9": "Sjajan, obiteljski posao i sve je bilo super! Odličan auto, odlična usluga! Toplo bih preporučio",
+        "rev-10": "zahvaljujući EOS Rent a Caru, vrlo kompetentan i uslužan",
+        "rev-11": "Dobra cijena, vrlo prijateljski. Preporuka!",
+        "rev-12": "10/10 sve pohvale na profesionalnosti i udobnosti vozila",
+        "loc-tgd": "Aerodrom TGD",
+        "loc-tiv": "Aerodrom TIV",
+        "loc-bar": "Luka Bar",
+        "loc-all": "Svi gradovi",
+        "steps-title": 'Kako rezervisati <span class="text-blue-600">u 3 koraka?</span>',
+        "step1-h": "Odaberite auto",
+        "step1-p": "Pregledajte našu modernu ponudu i izaberite vozilo po vašoj mjeri.",
+        "step2-h": "Potvrdite izbor",
+        "step2-p": "Pošaljite nam poruku. Odgovaramo odmah i dogovaramo detalje.",
+        "step3-h": "Preuzmite auto",
+        "step3-p": "Čekamo vas na dogovorenoj lokaciji. Spremni za put!",  
+    },
+    en: {
+        "hero-title": 'Your safety is our <span class="bg-gradient-to-b from-blue-300 via-blue-500 to-blue-800 bg-clip-text text-transparent font-black italic uppercase">priority.</span>',
+        "nav-home": '<i class="fas fa-home mr-2 text-blue-300"></i> Home',
+        "nav-offer": '<i class="fas fa-car mr-2 text-blue-300"></i> Cars',
+        "nav-reviews": '<i class="fas fa-star mr-2 text-blue-300"></i> Reviews',
+        "btn-contact": "WhatsApp Us", 
+        "hero-subtitle": "Pick up and drop off anywhere in Montenegro.",
+        "btn-view": "View Offers", "stat-1": "Happy clients",
+        "stat-2-main": "Everywhere in ME", "stat-2": "Available everywhere",
+        "stat-3": "24/7 Support", "reviews-title": "What clients say",
+        "offer-title": "Our Offer", "btn-rez": "Book Now", "premium": "Best Value",
+        "foot-title": "Available across Montenegro", "faq-title": "FAQ",
+        "ben-1-h": "Roadside Assistance", "ben-1-p": "Available 24/7.",
+        "ben-2-h": "Child Seat", "ben-2-p": "Free on request.",
+        "ben-3-h": "Green Card", "ben-3-p": "Border ready.",
+        "ben-4-h": "No Deposit", "ben-4-p": "Flexible options.",
+        "q1": "Required documents?", "a1": "Driving license and ID/Passport.",
+        "q2": "Airport pickup?", "a2": "Yes, Podgorica and Tivat airports.",
+        "q3": "Is insurance included?", "a3": "Yes, all cars have full insurance.",
+        "q4": "Is deposit required?", "a4": "Options available without deposit.",
+        "about-company-title": "About our company", "loc-title": "Pickup Locations",
+        "about-company-p1": "EOS Rent a Car is a family-owned business based in Bar, driven by the principles of honesty, quality, and absolute dedication to our clients.",
+        "about-company-p2": "From compact city cars to spacious 7-seater family vehicles, our offer is carefully selected and regularly serviced to ensure your safety.",
+        "about-team": "EOS Rent a Car Team",
+        "rev-1": "Yesterday we had a very pleasant experience...",
+        "rev-2": "Thank you so much for this car...",
+        "rev-3": "I rent cars from this guy often...",
+        "rev-4": "Extremely kind customer service...",
+        "rev-5": "The car was in perfect condition...",
+        "rev-6": "Excellent car...",
+        "rev-7": "Good service...",
+        "rev-8": "I rented a car for 25 days...",
+        "rev-9": "Great family business...",
+        "rev-10": "Thanks to EOS Rent a Car...",
+        "rev-11": "Good price...",
+        "rev-12": "10/10 all praise...",
+        "loc-tgd": "Airport TGD",
+        "loc-tiv": "Airport TIV",
+        "loc-bar": "Port of Bar",
+        "loc-all": "All Cities",
+        "steps-title": 'How to book <span class="text-blue-600">in 3 steps?</span>',
+        "step1-h": "Choose a Car",
+        "step1-p": "Browse our modern fleet and select the vehicle that fits your needs.",
+        "step2-h": "Confirm Booking",
+        "step2-p": "Send us a message. We reply instantly to arrange the details.",
+        "step3-h": "Pick up the Car",
+        "step3-p": "We wait for you at the agreed location. Ready to drive!",
+       
+    },
+    ru: {
+        "hero-title": 'Ваша безопасность — наш <span class="bg-gradient-to-b from-blue-300 via-blue-500 to-blue-800 bg-clip-text text-transparent font-black italic uppercase">приоритет.</span>',
+        "nav-home": '<i class="fas fa-home mr-2 text-blue-300"></i> Главная',
+        "nav-offer": '<i class="fas fa-car mr-2 text-blue-300"></i> Машины',
+        "nav-reviews": '<i class="fas fa-star mr-2 text-blue-300"></i> Отзывы',
+        "btn-contact": "WhatsApp",
+        "hero-subtitle": "Доставка авто по всей Черногории.",
+        "btn-view": "Выбрать авто", "stat-1": "Клиентов",
+        "stat-2-main": "Вся Черногория", "stat-2": "Доставка везде",
+        "stat-3": "Поддержка 24/7", "reviews-title": "Отзывы",
+        "offer-title": "Наш автопарк", "btn-rez": "Забронировать", "premium": "Наш выбор",
+        "foot-title": "Доступно по всей стране", "faq-title": "Вопросы",
+        "ben-1-h": "Помощь на дороге", "ben-1-p": "Доступны 24/7.",
+        "ben-2-h": "Детское кресло", "ben-2-p": "Бесплатно.",
+        "ben-3-h": "Зеленая карта", "ben-3-p": "Для границ.",
+        "ben-4-h": "Без депозита", "ben-4-p": "Гибкие условия.",
+        "q1": "Какие документы нужны?", "a1": "Права и паспорт.",
+        "q2": "Встреча в аэропорту?", "a2": "Да, Подгорица и Тиват.",
+        "q3": "Страховка включена?", "a3": "Да, полное страхование Каско.",
+        "q4": "Нужен ли депозит?", "a4": "Возможна аренда без депозита.",
+        "about-company-title": "О нашей компании", "loc-title": "Места доставки",
+        "about-company-p1": "EOS Rent a Car — это семейная компания из Бара, основанная на принципах честности, качества и абсолютной преданности каждому клиенту.",
+        "about-company-p2": "От компактных городских автомобилей до просторных 7-местных семейных минивэнов — наш автопарк тщательно отобран и регулярно проходит техническое обслуживание.",
+        "about-team": "Команда EOS Rent a Car",
+        "rev-1": "Вчера у нас был очень приятный опыт...",
+        "rev-2": "Большое спасибо за этот автомобиль...",
+        "rev-3": "Часто арендую машину у этого парня...",
+        "rev-4": "Исключительно вежливое обслуживание...",
+        "rev-5": "Автомобиль в идеальном состоянии...",
+        "rev-6": "Отличная машина...",
+        "rev-7": "Хороший сервис...",
+        "rev-8": "Арендовал машину на 25 дней...",
+        "rev-9": "Прекрасный семейный бизнес...",
+        "rev-10": "Спасибо EOS Rent a Car...",
+        "rev-11": "Хорошая цена...",
+        "rev-12": "10/10, высшая оценка...",
+        "loc-tgd": "Аэропорт TGD",
+        "loc-tiv": "Аэропорт TIV",
+        "loc-bar": "Порт Бар",
+        "loc-all": "Все города",
+        "steps-title": 'Как забронировать <span class="text-blue-600">в 3 шага?</span>',
+        "step1-h": "Выберите авто",
+        "step1-p": "Ознакомьтесь с нашим современным автопарком и выберите подходящий автомобиль.",
+        "step2-h": "Подтвердите бронь",
+        "step2-p": "Напишите нам. Мы ответим сразу и обсудим детали.",
+        "step3-h": "Получите авто",
+        "step3-p": "Мы встретим вас в оговоренном месте. В путь!",
+
+    }
+};
+
+let currentLang = 'mne';
+
+function changeLanguage(lang, flag) {
+    currentLang = lang;
+    document.getElementById('current-flag').innerText = flag;
+    document.getElementById('current-lang').innerText = lang.toUpperCase();
+    
+    document.querySelectorAll('[data-key]').forEach(elem => {
+        const key = elem.getAttribute('data-key');
+        if (translations[lang][key]) {
+            // KLJUČNA PROMJENA: innerHTML umjesto innerText
+            elem.innerHTML = translations[lang][key];
+        }
+    });
+    const dropdown = document.getElementById('language-options'); 
+    if (dropdown) {
+        dropdown.classList.add('hidden');
+    }
+}
+
+
+        // PODACI ZA MODELE
+        const carData = [
+            { name: "Audi A3 2.0 TDI", specs: ["Motor: 2.0", "Gorivo: Dizel", "Mjenjač: Automatik", "Klima: Dvozonska"], images: ["https://images.clickdealer.co.uk/vehicles/7274/7274301/large2/175021121.jpg", "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b", "https://images.unsplash.com/photo-1541348263662-e0c8de4259ba"] },
+            { name: "VW Eos 2.0 TDI", specs: ["Motor: 2.0", "Gorivo: Dizel", "Mjenjač: Manuelni", "Kabriolet: Da"], images: ["https://www.heritage-print.com/p/731/2011-volkswagen-eos-20-tdi-40607111.jpg.webp", "https://images.unsplash.com/photo-1541899481282-d53bffe3c15d"] },
+            { name: "VW Touran (7 sjedišta)", specs: ["Motor: 1.6 TDI", "Sjedišta: 7", "Mjenjač: Manuelni", "Prtljag: Veliki"], images: ["https://s1.cdn.autoevolution.com/images/gallery/VOLKSWAGEN-Touran-1517_17.jpeg", "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2"] },
+            { name: "Škoda Octavia", specs: ["Motor: 1.6 TDI", "Mjenjač: Manuelni", "Klima: Automatska", "Potrošnja: Mala"], images: ["https://imgd.aeplcdn.com/664x374/cw/ec/21023/Skoda-Octavia-Right-Front-Three-Quarter-77808.jpg?v=201711021421&q=80"] },
+            { name: "Renault Clio", specs: ["Motor: 1.5 dCi", "Mjenjač: Manuelni", "Idealan za grad", "Mala potrošnja"], images: ["https://car-images.bauersecure.com/wp-images/7823/renaultclio001.jpg"] },
+            { name: "VW Golf 7", specs: ["Motor: 1.6 TDI", "Mjenjač: Manuelni", "Oprema: Full", "Navigacija: Da"], images: ["https://www.asphalte.ch/news/wp-content/gallery/vw-golf-vii-gti/vw-golf-vii-gti-03.jpg"] }
+        ];
+
+        // MODAL LOGIKA
+        let currentModalImgIdx = 0;
+        function openModal(idx) {
+            const car = carData[idx];
+            document.getElementById('modalTitle').innerText = car.name;
+            document.getElementById('modalSpecs').innerHTML = car.specs.map(s => `<p>${s}</p>`).join('');
+            document.getElementById('modalWaBtn').href = `https://wa.me/38268688337?text=Rezervacija: ${car.name}`;
+            
+            const track = document.getElementById('modalTrack');
+            track.innerHTML = car.images.map(img => `<div class="modal-slide"><img src="${img}"></div>`).join('');
+            
+            currentModalImgIdx = 0;
+            updateModalSlider();
+            document.getElementById('carModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            document.querySelector('#carModal [data-key="btn-rez"]').innerText = translations[currentLang]['btn-rez'];
+        }
+
+        function closeModal() {
+            document.getElementById('carModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function moveModalSlider(dir) {
+            const slides = document.querySelectorAll('.modal-slide');
+            currentModalImgIdx = (currentModalImgIdx + dir + slides.length) % slides.length;
+            updateModalSlider();
+        }
+
+        function updateModalSlider() {
+            const track = document.getElementById('modalTrack');
+            track.style.transform = `translateX(-${currentModalImgIdx * 100}%)`;
+        }
+        function toggleFaq(button) {
+    const item = button.parentElement;
+    
+    // Zatvori sve ostale ako želiš harmonika efekat
+    document.querySelectorAll('.faq-item').forEach(otherItem => {
+        if (otherItem !== item) otherItem.classList.remove('active');
+    });
+
+    // Prebaci (toggle) aktivnu klasu na kliknutom elementu
+    item.classList.toggle('active');
+}
+        // SLIDER ZA RECENZIJE
+        let currentSlide = 0;
+const track = document.getElementById('sliderTrack');
+
+function updateSlider() {
+    // Na mobilnom prikazuje 1 kartu, na desktopu 3
+    const cardsToShow = window.innerWidth < 768 ? 1 : 3;
+    const slideWidth = 100 / cardsToShow;
+    track.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+}
+
+function nextSlide() {
+    const totalSlides = document.querySelectorAll('.slide').length;
+    const cardsToShow = window.innerWidth < 768 ? 1 : 3;
+    if (currentSlide < totalSlides - cardsToShow) {
+        currentSlide++;
+    } else {
+        currentSlide = 0; // Vraća na početak (loop)
+    }
+    updateSlider();
+}
+
+function prevSlide() {
+    if (currentSlide > 0) {
+        currentSlide--;
+    } else {
+        const totalSlides = document.querySelectorAll('.slide').length;
+        const cardsToShow = window.innerWidth < 768 ? 1 : 3;
+        currentSlide = totalSlides - cardsToShow;
+    }
+    updateSlider();
+}
+
+// --- KOD ZA SWIPE NA TELEFONU ---
+let touchStartX = 0;
+let touchEndX = 0;
+
+// Pratimo dodir na sliderTrack elementu
+track.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+}, {passive: true});
+
+track.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}, {passive: true});
+
+function handleSwipe() {
+    const swipeDistance = touchStartX - touchEndX;
+    const threshold = 50; // Koliko piksela prst mora da pređe da bi se priznalo kao swipe
+
+    if (swipeDistance > threshold) {
+        nextSlide(); // Prevlačenje ulijevo -> sljedeći slajd
+    } else if (swipeDistance < -threshold) {
+        prevSlide(); // Prevlačenje udesno -> prethodni slajd
+    }
+}
+let modalTouchStartX = 0;
+const modalTrack = document.getElementById('modalTrack');
+modalTrack.addEventListener('touchstart', e => {
+    modalTouchStartX = e.changedTouches[0].screenX;
+}, {passive: true});
+
+modalTrack.addEventListener('touchend', e => {
+    const dist = modalTouchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(dist) > 50) {
+        moveModalSlider(dist > 0 ? 1 : -1);
+    }
+}, {passive: true});
+// --- KRAJ KODA ZA SWIPE ---
+
+// Automatsko pomjeranje svakih 5 sekundi, pauzira na hover
+let autoSlide = setInterval(nextSlide, 5000);
+const sliderContainer = document.querySelector('.slider-container');
+sliderContainer.addEventListener('mouseenter', () => clearInterval(autoSlide));
+sliderContainer.addEventListener('mouseleave', () => { autoSlide = setInterval(nextSlide, 5000); });
+
+// Prilagodi pri promjeni veličine ekrana
+window.addEventListener('resize', updateSlider);
+    </script>
+</body>
+</html>

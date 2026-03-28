@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find 'c:\\\\Users\\\\PC\\\\OneDrive\\\\Desktop\\\\Rent a Car' -type f -name *)"
+    ]
+  }
+}
