@@ -53,18 +53,18 @@
             </div> <div class="flex items-center space-x-2 md:space-x-3 overflow-visible">
                 
                 <div class="hidden xl:flex items-center space-x-2 font-bold uppercase text-[10px] tracking-[0.12em]">
-                    <a href="javascript:window.scrollTo(0,0);" data-key="nav-home" 
-                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-md flex items-center group">
+                    <a href="javascript:window.scrollTo(0,0);" data-key="nav-home"
+                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-lg flex items-center group">
                        <i class="fas fa-home mr-2 text-blue-300"></i> Početna
                     </a>
-                    
-                    <a href="#ponuda" data-key="nav-offer" 
-                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-md flex items-center group">
+
+                    <a href="#ponuda" data-key="nav-offer"
+                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-lg flex items-center group">
                        <i class="fas fa-car mr-2 text-blue-300"></i> Ponuda
                     </a>
-                    
-                    <a href="#iskustva" data-key="nav-reviews" 
-                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-md flex items-center group">
+
+                    <a href="#iskustva" data-key="nav-reviews"
+                       class="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-lg flex items-center group">
                        <i class="fas fa-star mr-2 text-blue-300"></i> Iskustva
                     </a>
                 </div>
@@ -128,13 +128,13 @@
             </div>
         </div>
     </section>
-    <div id="carModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-2xl rounded-3xl overflow-hidden relative shadow-2xl">
+    <div id="carModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onclick="if(event.target===this)closeModal()">
+        <div class="bg-white w-full max-w-3xl rounded-3xl overflow-y-auto relative shadow-2xl max-h-[90vh]">
             <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/90 w-10 h-10 rounded-full flex items-center justify-center text-blue-900 shadow-lg">
                 <i class="fas fa-times text-xl"></i>
             </button>
-            
-            <div class="relative h-64 md:h-80 overflow-hidden bg-slate-100">
+
+            <div class="relative h-64 md:h-80 overflow-hidden bg-slate-100 rounded-t-3xl">
                 <div id="modalTrack" class="modal-track"></div>
                 <button onclick="moveModalSlider(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white p-2 rounded-full text-blue-900 transition"><i class="fas fa-chevron-left"></i></button>
                 <button onclick="moveModalSlider(1)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/50 hover:bg-white p-2 rounded-full text-blue-900 transition"><i class="fas fa-chevron-right"></i></button>
@@ -142,7 +142,26 @@
 
             <div class="p-8">
                 <h2 id="modalTitle" class="text-3xl font-black text-blue-900 italic uppercase mb-4"></h2>
-                <div id="modalSpecs" class="space-y-1 text-lg font-bold text-slate-600 border-l-4 border-blue-600 pl-4 mb-8"></div>
+                <div id="modalSpecs" class="space-y-1 text-lg font-bold text-slate-600 border-l-4 border-blue-600 pl-4 mb-6"></div>
+
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2" data-key="lbl-date">Datum preuzimanja</label>
+                        <input type="date" id="bookingDate"
+                            class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 font-bold text-blue-900 focus:border-blue-500 focus:outline-none cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2" data-key="lbl-days">Broj dana</label>
+                        <input type="number" id="bookingDays" min="1" max="90" value="3"
+                            class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 font-bold text-blue-900 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div id="priceEstimate" class="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 mb-6 text-center">
+                    <span class="text-sm text-slate-500 font-bold uppercase tracking-widest" data-key="lbl-total">Procjena ukupne cijene: </span>
+                    <span id="totalPrice" class="text-xl font-black text-blue-800"></span>
+                </div>
+
                 <a id="modalWaBtn" href="#" class="block w-full bg-blue-600 text-white text-center py-4 rounded-xl font-black uppercase hover:bg-blue-700 transition shadow-lg">
                     <span data-key="btn-rez">Rezerviši</span>
                 </a>
@@ -764,14 +783,17 @@
         "loc-tgd": "Aerodrom TGD",
         "loc-tiv": "Aerodrom TIV",
         "loc-bar": "Luka Bar",
-        "loc-all": "Svi gradovi",
+        "loc-all": "Naša adresa",
         "steps-title": 'Kako rezervisati <span class="text-blue-600">u 3 koraka?</span>',
         "step1-h": "Odaberite auto",
         "step1-p": "Pregledajte našu modernu ponudu i izaberite vozilo po vašoj mjeri.",
         "step2-h": "Potvrdite izbor",
         "step2-p": "Pošaljite nam poruku. Odgovaramo odmah i dogovaramo detalje.",
         "step3-h": "Preuzmite auto",
-        "step3-p": "Čekamo vas na dogovorenoj lokaciji. Spremni za put!",  
+        "step3-p": "Čekamo vas na dogovorenoj lokaciji. Spremni za put!",
+        "lbl-date": "Datum preuzimanja",
+        "lbl-days": "Broj dana",
+        "lbl-total": "Procjena ukupne cijene: ",
     },
     en: {
         "hero-title": 'Your safety is our <span class="bg-gradient-to-b from-blue-300 via-blue-500 to-blue-800 bg-clip-text text-transparent font-black italic uppercase">priority.</span>',
@@ -812,7 +834,7 @@
         "loc-tgd": "Airport TGD",
         "loc-tiv": "Airport TIV",
         "loc-bar": "Port of Bar",
-        "loc-all": "All Cities",
+        "loc-all": "Our Address",
         "steps-title": 'How to book <span class="text-blue-600">in 3 steps?</span>',
         "step1-h": "Choose a Car",
         "step1-p": "Browse our modern fleet and select the vehicle that fits your needs.",
@@ -820,7 +842,9 @@
         "step2-p": "Send us a message. We reply instantly to arrange the details.",
         "step3-h": "Pick up the Car",
         "step3-p": "We wait for you at the agreed location. Ready to drive!",
-       
+        "lbl-date": "Pickup date",
+        "lbl-days": "Number of days",
+        "lbl-total": "Estimated total: ",
     },
     ru: {
         "hero-title": 'Ваша безопасность — наш <span class="bg-gradient-to-b from-blue-300 via-blue-500 to-blue-800 bg-clip-text text-transparent font-black italic uppercase">приоритет.</span>',
@@ -861,7 +885,7 @@
         "loc-tgd": "Аэропорт TGD",
         "loc-tiv": "Аэропорт TIV",
         "loc-bar": "Порт Бар",
-        "loc-all": "Все города",
+        "loc-all": "Наш адрес",
         "steps-title": 'Как забронировать <span class="text-blue-600">в 3 шага?</span>',
         "step1-h": "Выберите авто",
         "step1-p": "Ознакомьтесь с нашим современным автопарком и выберите подходящий автомобиль.",
@@ -869,6 +893,9 @@
         "step2-p": "Напишите нам. Мы ответим сразу и обсудим детали.",
         "step3-h": "Получите авто",
         "step3-p": "Мы встретим вас в оговоренном месте. В путь!",
+        "lbl-date": "Дата получения",
+        "lbl-days": "Количество дней",
+        "lbl-total": "Итоговая стоимость: ",
 
     }
 };
@@ -895,26 +922,73 @@ function changeLanguage(lang, flag) {
 
 
         // PODACI ZA MODELE
+        // prices: [cijena 1-3 dana, cijena 4-15 dana, cijena 15+ dana]
         const carData = [
-            { name: "Audi A3 2.0 TDI", specs: ["Motor: 2.0", "Gorivo: Dizel", "Mjenjač: Automatik", "Klima: Dvozonska"], images: ["https://images.clickdealer.co.uk/vehicles/7274/7274301/large2/175021121.jpg", "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b", "https://images.unsplash.com/photo-1541348263662-e0c8de4259ba"] },
-            { name: "VW Eos 2.0 TDI", specs: ["Motor: 2.0", "Gorivo: Dizel", "Mjenjač: Manuelni", "Kabriolet: Da"], images: ["https://www.heritage-print.com/p/731/2011-volkswagen-eos-20-tdi-40607111.jpg.webp", "https://images.unsplash.com/photo-1541899481282-d53bffe3c15d"] },
-            { name: "VW Touran (7 sjedišta)", specs: ["Motor: 1.6 TDI", "Sjedišta: 7", "Mjenjač: Manuelni", "Prtljag: Veliki"], images: ["https://s1.cdn.autoevolution.com/images/gallery/VOLKSWAGEN-Touran-1517_17.jpeg", "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2"] },
-            { name: "Škoda Octavia", specs: ["Motor: 1.6 TDI", "Mjenjač: Manuelni", "Klima: Automatska", "Potrošnja: Mala"], images: ["https://imgd.aeplcdn.com/664x374/cw/ec/21023/Skoda-Octavia-Right-Front-Three-Quarter-77808.jpg?v=201711021421&q=80"] },
-            { name: "Renault Clio", specs: ["Motor: 1.5 dCi", "Mjenjač: Manuelni", "Idealan za grad", "Mala potrošnja"], images: ["https://car-images.bauersecure.com/wp-images/7823/renaultclio001.jpg"] },
-            { name: "VW Golf 7", specs: ["Motor: 1.6 TDI", "Mjenjač: Manuelni", "Oprema: Full", "Navigacija: Da"], images: ["https://www.asphalte.ch/news/wp-content/gallery/vw-golf-vii-gti/vw-golf-vii-gti-03.jpg"] }
+            { name: "Audi A3 2.0 TDI", prices: [40, 35, 30], specs: ["Motor: 2.0", "Gorivo: Dizel", "Mjenjač: Automatik", "Klima: Dvozonska"], images: ["https://images.clickdealer.co.uk/vehicles/7274/7274301/large2/175021121.jpg", "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b", "https://images.unsplash.com/photo-1541348263662-e0c8de4259ba"] },
+            { name: "VW Eos 2.0 TDI", prices: [50, 40, 30], specs: ["Motor: 2.0", "Gorivo: Dizel", "Mjenjač: Manuelni", "Kabriolet: Da"], images: ["https://www.heritage-print.com/p/731/2011-volkswagen-eos-20-tdi-40607111.jpg.webp", "https://images.unsplash.com/photo-1541899481282-d53bffe3c15d"] },
+            { name: "VW Touran (7 sjedišta)", prices: [45, 40, 30], specs: ["Motor: 1.6 TDI", "Sjedišta: 7", "Mjenjač: Manuelni", "Prtljag: Veliki"], images: ["https://s1.cdn.autoevolution.com/images/gallery/VOLKSWAGEN-Touran-1517_17.jpeg", "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2"] },
+            { name: "Škoda Octavia", prices: [40, 35, 30], specs: ["Motor: 1.6 TDI", "Mjenjač: Manuelni", "Klima: Automatska", "Potrošnja: Mala"], images: ["https://imgd.aeplcdn.com/664x374/cw/ec/21023/Skoda-Octavia-Right-Front-Three-Quarter-77808.jpg?v=201711021421&q=80"] },
+            { name: "Renault Clio", prices: [35, 30, 25], specs: ["Motor: 1.5 dCi", "Mjenjač: Manuelni", "Idealan za grad", "Mala potrošnja"], images: ["https://car-images.bauersecure.com/wp-images/7823/renaultclio001.jpg"] },
+            { name: "VW Golf 7", prices: [40, 35, 30], specs: ["Motor: 1.6 TDI", "Mjenjač: Manuelni", "Oprema: Full", "Navigacija: Da"], images: ["https://www.asphalte.ch/news/wp-content/gallery/vw-golf-vii-gti/vw-golf-vii-gti-03.jpg"] }
         ];
 
         // MODAL LOGIKA
         let currentModalImgIdx = 0;
+        let currentCarIdx = 0;
+
+        function calcPrice(carIdx, days) {
+            const p = carData[carIdx].prices;
+            const perDay = days <= 3 ? p[0] : days <= 15 ? p[1] : p[2];
+            return perDay * days;
+        }
+
+        function updateBookingLink() {
+            const car = carData[currentCarIdx];
+            const dateVal = document.getElementById('bookingDate').value;
+            const days = parseInt(document.getElementById('bookingDays').value) || 1;
+
+            // Format date as DD.MM.YYYY
+            let dateStr = '';
+            if (dateVal) {
+                const [y, m, d] = dateVal.split('-');
+                dateStr = `${d}.${m}.${y}`;
+            }
+
+            const total = calcPrice(currentCarIdx, days);
+            document.getElementById('totalPrice').innerText = `${total}€`;
+
+            const lang = currentLang;
+            let msg;
+            if (lang === 'en') {
+                msg = `Reservation: ${car.name} | Pickup date: ${dateStr || '?'} | Days: ${days} | Total: ${total}€`;
+            } else if (lang === 'ru') {
+                msg = `Бронирование: ${car.name} | Дата: ${dateStr || '?'} | Дней: ${days} | Итого: ${total}€`;
+            } else {
+                msg = `Rezervacija: ${car.name} | Datum preuzimanja: ${dateStr || '?'} | Broj dana: ${days} | Ukupno: ${total}€`;
+            }
+
+            document.getElementById('modalWaBtn').href = `https://wa.me/38268688337?text=${encodeURIComponent(msg)}`;
+        }
+
         function openModal(idx) {
+            currentCarIdx = idx;
             const car = carData[idx];
             document.getElementById('modalTitle').innerText = car.name;
             document.getElementById('modalSpecs').innerHTML = car.specs.map(s => `<p>${s}</p>`).join('');
-            document.getElementById('modalWaBtn').href = `https://wa.me/38268688337?text=Rezervacija: ${car.name}`;
-            
+
+            // Set today as minimum date and default
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('bookingDate');
+            dateInput.min = today;
+            if (!dateInput.value || dateInput.value < today) dateInput.value = today;
+
+            document.getElementById('bookingDays').value = 3;
+
+            updateBookingLink();
+
             const track = document.getElementById('modalTrack');
             track.innerHTML = car.images.map(img => `<div class="modal-slide"><img src="${img}"></div>`).join('');
-            
+
             currentModalImgIdx = 0;
             updateModalSlider();
             document.getElementById('carModal').style.display = 'flex';
@@ -922,6 +996,10 @@ function changeLanguage(lang, flag) {
 
             document.querySelector('#carModal [data-key="btn-rez"]').innerText = translations[currentLang]['btn-rez'];
         }
+
+        // Live update when date or days change
+        document.getElementById('bookingDate').addEventListener('change', updateBookingLink);
+        document.getElementById('bookingDays').addEventListener('input', updateBookingLink);
 
         function closeModal() {
             document.getElementById('carModal').style.display = 'none';

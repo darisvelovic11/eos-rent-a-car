@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find 'c:\\\\Users\\\\PC\\\\OneDrive\\\\Desktop\\\\Rent a Car' -type f -name *)"
+      "Bash(find 'c:\\\\Users\\\\PC\\\\OneDrive\\\\Desktop\\\\Rent a Car' -type f -name *)",
+      "Bash(curl -s \"https://api.cdnjs.com/libraries/font-awesome/6.0.0?fields=sri\")",
+      "Bash(curl -s \"https://api.cdnjs.com/libraries/tailwindcss/2.2.19?fields=sri\")"
     ]
   }
 }
